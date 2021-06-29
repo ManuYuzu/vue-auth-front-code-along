@@ -8,6 +8,9 @@
         <v-col cols="2" justify="center">
           <v-btn>Pokemon</v-btn>
         </v-col>
+        <v-col cols="2" justify="center">
+          <Logout />
+        </v-col>
       </v-row>
 
     </v-app-bar>
@@ -15,8 +18,13 @@
 </template>
 
 <script>
+import Logout from "@/components/Logout.vue"
+
   export default {
     name: "Logged",
+    components: {
+      Logout,
+    }
   }
 </script>
 

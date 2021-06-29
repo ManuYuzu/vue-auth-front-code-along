@@ -14,7 +14,7 @@
         </v-tabs>
       </v-col>
       <v-col>
-        <v-btn color="red" dark @click="logout">Logout</v-btn>
+        <Logout />
       </v-col>
     </v-row>
   </v-container>
@@ -23,6 +23,7 @@
 <script>
 import Login from "../components/Login.vue";
 import Signup from "../components/Signup.vue";
+import Logout from "../components/Logout.vue"
 
 export default {
   name: "Home",
@@ -30,6 +31,7 @@ export default {
   components: {
     Login,
     Signup,
+    Logout
   },
   methods: {
     logout() {

@@ -41,10 +41,12 @@ export default {
       authService
         .login(this.email, this.password)
         .then(response => {
-          console.log(response)
-          localStorage.setItem('token', response.token)
-          localStorage.setItem('email', response.role)
-          localStorage.setItem('role', response.email)
+          if (response.token) {
+            localStorage.setItem('token', response.token)
+            localStorage.setItem('email', response.role)
+            localStorage.setItem('role', response.email)
+            this.$router.push("/logged")
+          }
         })
         .catch(err => console.log(err))
     }
