@@ -9,7 +9,7 @@
         <v-text-field type="text" label="Email" v-model="email"></v-text-field>
         <v-text-field
           type="password"
-          label="Passowrd"
+          label="Password"
           v-model="password"
         ></v-text-field>
       </v-card-text>
@@ -17,13 +17,16 @@
       <v-divider></v-divider>
 
       <v-card-actions>
-        <v-btn color="success">Login</v-btn>
+        <v-btn color="success" @click="login">Login</v-btn>
       </v-card-actions>
     </v-card>
   </div>
 </template>
 
 <script>
+
+import authService from "@/sevices/authService"
+
 export default {
   name: "HelloWorld",
 
@@ -33,5 +36,18 @@ export default {
     snackbar: false,
     snackText: "",
   }),
+  methods: {
+    login() {
+      authService
+        .login(this.email, this.password)
+        .then(response => {
+          console.log(response)
+          localStorage.setItem('token', response.token)
+          localStorage.setItem('email', response.role)
+          localStorage.setItem('role', response.email)
+        })
+        .catch(err => console.log(err))
+    }
+  }
 };
 </script>

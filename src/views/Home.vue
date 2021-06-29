@@ -13,6 +13,9 @@
           </v-tab-item>
         </v-tabs>
       </v-col>
+      <v-col>
+        <v-btn color="red" dark @click="logout">Logout</v-btn>
+      </v-col>
     </v-row>
   </v-container>
 </template>
@@ -28,5 +31,12 @@ export default {
     Login,
     Signup,
   },
+  methods: {
+    logout() {
+      localStorage.removeItem('token')
+      localStorage.removeItem('email')
+      localStorage.removeItem('role')
+    }
+  }
 };
 </script>

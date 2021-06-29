@@ -22,9 +22,8 @@
         <v-text-field
           ref="password"
           type="password"
-          label="Passowrd"
+          label="Password"
           v-model="password"
-          :rules="[password]"
         ></v-text-field>
         <v-text-field
           type="password"
@@ -36,6 +35,7 @@
           label
           :items="['user', 'master', 'admin']"
           placeholder="Select a role"
+          v-model="role"
           outlined
         ></v-select>
       </v-card-text>
@@ -43,13 +43,15 @@
       <v-divider></v-divider>
 
       <v-card-actions>
-        <v-btn color="success">Signup</v-btn>
+        <v-btn color="success" @click.prevent="submit">Signup</v-btn>
       </v-card-actions>
     </v-card>
   </div>
 </template>
 
 <script>
+import authService from "@/sevices/authService"
+
 export default {
   name: "HelloWorld",
 
@@ -58,6 +60,7 @@ export default {
     email: "",
     password: "",
     confPass: "",
+    role: "",
     formHasErrors: false,
     snackbar: false,
     rules: {
@@ -65,14 +68,14 @@ export default {
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
           value
         ) || "Email doesn't have the right format",
-      password: (value) =>
-        /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/.test(value) ||
-        "8 charachters, lowercase and uppercase",
+      // password: (value) =>
+      //   /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z]{8,}$/.test(value) ||
+      //   "8 characters, lowercase and uppercase",
     },
   }),
   computed: {
     confPassRule() {
-      return () => this.password === this.confPass || "Passowrds do not match";
+      return () => this.password === this.confPass || "Passwords do not match";
     },
     form() {
       return {
@@ -93,6 +96,17 @@ export default {
 
       if (!this.formHasErrors) this.signup();
     },
+    signup() {
+      authService
+        .signup(this.name, this.email, this.password, this.role)
+        .then(response => {
+          localStorage.setItem('token', response.token)
+          localStorage.setItem('email', response.role)
+          localStorage.setItem('role', response.email)
+
+        })
+        .catch(err => { console.log(err) })
+    }
   },
 };
 </script>
